@@ -1,10 +1,12 @@
 <script>
     import ProgressBar from "./ProgressBar.svelte";
+    import {createEventDispatcher} from "svelte";
     let totalSecond=20;
     let secondLeft=totalSecond;
     let isRunning=false;
     //calculate in percent
     $: progress = ((totalSecond-secondLeft)/totalSecond)*100;
+    const dispatch= createEventDispatcher();
     const handleStart=()=>{
         isRunning=true;
         let timer =setInterval(() => {
@@ -13,6 +15,7 @@
                 clearInterval(timer)
                 secondLeft=totalSecond;
                 isRunning=false;
+                dispatch('endwash','end timer')
             }
         }, 1000);
 
